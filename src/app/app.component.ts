@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ApiService } from './api.service';
+import { ShoppingService } from './shopping.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'shopping';
+  constructor(public apiService: ApiService, public shoppingService: ShoppingService) {}
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnInit() {
+    this.apiService.query();
+  }
 }

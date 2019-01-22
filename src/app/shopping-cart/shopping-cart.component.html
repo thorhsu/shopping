@@ -1,0 +1,18 @@
+<div class="well cart">
+    <h4>購物車</h4>
+    <ul class="itemsInCart ">
+      <li *ngFor="let shoppingItem of (shoppingService.shoppingItems | cartShow)">
+        <div class="cart-item">
+          <div class="cart-title">{{shoppingItem.originalItem.name}}</div>
+          <span class="price">$ {{shoppingItem.originalItem.price}}</span> x
+          <span class="count">{{shoppingItem.count}}</span>
+          <div class="handler"> 
+            <a href="#" class="cart-btn plus" (click)="shoppingService.addToCart(shoppingItem.originalItem)">+</a
+            ><a href="#" class="cart-btn minus" (click)="shoppingService.removeFromCart(shoppingItem.originalItem.id)">-</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <hr />
+    <p>小計： <span>$ {{shoppingService.total}}</span></p>
+  </div>
