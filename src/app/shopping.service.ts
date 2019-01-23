@@ -8,11 +8,8 @@ import { isNgTemplate } from '@angular/compiler';
 export class ShoppingService {
   shoppingItems: Commodity[] = [];
   get total() {
-    let _total = 0;
-    for(const item of this.shoppingItems) {
-      _total += item.price;
-    }
-    return _total;
+     return this.shoppingItems.map(item => item.price)
+      .reduce((accumulator= 0, itemPrice) => accumulator + itemPrice);
   }
 
   constructor() { }
