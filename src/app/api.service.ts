@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { filter  } from 'rxjs/operators';
+import { filter, shareReplay, mergeMap, toArray, tap, skip, take  } from 'rxjs/operators';
 import { from  } from 'rxjs';
 
 export interface Commodity {
@@ -27,21 +27,34 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  dataProvider =
+        this.http.get<any[]>('./assets/pros-list.json').pipe(shareReplay());
+
   query() {
     // Observable
     // RxJS
-    this.http
-      .get('./assets/pros-list.json')
-      // .pipe(filter(item => {console.log(item); return true; }))
-      .subscribe((data: Commodity[]) => {
-         data = data.filter(item => item.name.toLowerCase().indexOf(this.searchStr.toLowerCase()) >= 0);
-         this.pages = [];
-         const pageNo = Math.floor(data.length / this.maxPageItems) + (data.length % this.maxPageItems !== 0 ? 1 : 0);
-         for (let i = 0 ; i < pageNo; i++) {
-           this.pages.push(i);
-         }
-         this.data = data.slice(this.currentPage * this.maxPageItems, (this.currentPage + 1) * this.maxPageItems);
-      });
+    this.dataProvider
+    .pipe(
+      tap(items => {
+        this.pages = [];
+        const pageNo = Math.floor(items.length / this.maxPageItems) + (items.length % this.maxPageItems !== 0 ? 1 : 0);
+        for (let i = 0 ; i < pageNo; i++) {
+          this.pages.push(i);
+        }
+      }),
+      mergeMap(items => from(items)),
+      filter(item =>
+        this.searchStr.length === 0
+          ? true
+          : item.name.toLowerCase().indexOf(this.searchStr.toLowerCase()) >= 0
+      ),
+      skip(this.currentPage * this.maxPageItems),
+      take(this.maxPageItems),
+      toArray()
+    )
+    .subscribe((data: Commodity[]) => {
+      this.data = data;
+    });
     // this.http.post(url, body).subscribe();
     // this.http.put(url, body).subscribe();
     // this.http.delete(url).subscribe();

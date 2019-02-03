@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ApiService } from './api.service';
 import { ShoppingService } from './shopping.service';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -8,10 +11,15 @@ import { ShoppingService } from './shopping.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public apiService: ApiService, public shoppingService: ShoppingService) {}
+  constructor(public apiService: ApiService,
+    public shoppingService: ShoppingService,
+    private router: Router,
+    private location: Location) {}
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
-    this.apiService.query();
+    if (!this.location.path()) {
+       this.router.navigate(['/page/1']);
+    }
   }
 }

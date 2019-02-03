@@ -8,7 +8,7 @@ export class CartShowPipe implements PipeTransform {
   // originalItem, count, id
   transform(shoppingItems: Commodity[], args?: any): any {
     const outputItems = [];
-    for (const commodity of shoppingItems){
+    for (const commodity of shoppingItems) {
       const transformObj = {originalItem: commodity, count: 1, id: commodity.id};
       let added = false;
       for(const item of outputItems) {

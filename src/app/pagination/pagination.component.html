@@ -1,16 +1,16 @@
 <ul class="pagination" *ngIf="apiService.pages.length !== 0">
   <li *ngIf="apiService.currentPage !== 0" >
-    <a href="#" (click)="apiService.currentPage = apiService.currentPage - 1; apiService.query()">
+    <a [routerLink]="['/page', apiService.currentPage]" (click)="apiService.currentPage = apiService.currentPage - 1; apiService.query()">
       « Prev
     </a>
   </li>
   <!-- <li class="active"><a href="#" >1</a></li> -->
   <li *ngFor="let page of apiService.pages; let idx = index" 
         [class.active]="apiService.currentPage === page" >
-        <a href="#" (click)="apiService.currentPage=page; apiService.query()">{{ page + 1 }}</a>
+        <a [routerLink]="['/page', page + 1 ]"  (click)="apiService.currentPage=page; apiService.query()">{{ page + 1 }}</a>
   </li>
   <li *ngIf="apiService.currentPage !== (apiService.pages.length - 1)">
-    <a href="#" (click)="apiService.currentPage = apiService.currentPage + 1; apiService.query()">
+    <a [routerLink]="['/page', apiService.currentPage + 2]" (click)="apiService.currentPage = apiService.currentPage + 1; apiService.query()">
       Next »
     </a>
   </li>

@@ -1,7 +1,7 @@
 <div class="well cart">
     <h4>購物車</h4>
     <ul class="itemsInCart ">
-      <li *ngFor="let shoppingItem of (shoppingService.shoppingItems | cartShow)">
+      <li *ngFor="let shoppingItem of (shoppingService.shoppingItems)">
         <div class="cart-item">
           <div class="cart-title">{{shoppingItem.originalItem.name}}</div>
           <span class="price">$ {{shoppingItem.originalItem.price}}</span> x

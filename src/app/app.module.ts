@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { CartShowPipe } from './cart-show.pipe';
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+  { path: '', pathMatch: 'full', component: AppComponent },
+  { path: 'page/:pageNo', component: PaginationComponent}
+];
 
 @NgModule({
   declarations: [
@@ -16,6 +21,7 @@ import { CartShowPipe } from './cart-show.pipe';
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot(routes),
     HttpClientModule,
     FormsModule
   ],
