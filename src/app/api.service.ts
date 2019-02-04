@@ -31,6 +31,7 @@ export class ApiService {
         this.http.get<any[]>('./assets/pros-list.json').pipe(shareReplay());
 
   query() {
+    console.log("searchStr:", this.searchStr);
     // Observable
     // RxJS
     this.dataProvider
@@ -41,17 +42,18 @@ export class ApiService {
           ? true
           : item.name.toLowerCase().indexOf(this.searchStr.toLowerCase()) >= 0
       ),
-      skip(this.currentPage * this.maxPageItems),
-      take(this.maxPageItems),
       toArray()
     )
     .subscribe((data: Commodity[]) => {
       this.pages = [];
       const pageNo = Math.floor(data.length / this.maxPageItems) + (data.length % this.maxPageItems !== 0 ? 1 : 0);
       for (let i = 0 ; i < pageNo; i++) {
-        this.pages.push(i);
+          this.pages.push(i);
       }
-      this.data = data;
+      if (this.currentPage * this.maxPageItems > data.length) {
+        this.currentPage = 0;
+      }
+      this.data = data.slice(this.currentPage * this.maxPageItems, (this.currentPage + 1) * this.maxPageItems);
     });
     // this.http.post(url, body).subscribe();
     // this.http.put(url, body).subscribe();
