@@ -14,7 +14,7 @@
           {{item.info}}
         </p>
         <p class="item-price">$ {{item.price}}</p>
-        <a href="#" class="btn btn-primary" (click)="shoppingService.addToCart(item)" >放入購物車 <span class="glyphicon glyphicon-chevron-right"></span
+        <a [routerLink]="['/page', apiService.currentPage + 1]" class="btn btn-primary" (click)="shoppingService.addToCart(item)" >放入購物車 <span class="glyphicon glyphicon-chevron-right"></span
         ></a>
       </div>
 

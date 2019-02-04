@@ -6,9 +6,9 @@
           <div class="cart-title">{{shoppingItem.originalItem.name}}</div>
           <span class="price">$ {{shoppingItem.originalItem.price}}</span> x
           <span class="count">{{shoppingItem.count}}</span>
-          <div class="handler"> 
-            <a href="#" class="cart-btn plus" (click)="shoppingService.addToCart(shoppingItem.originalItem)">+</a
-            ><a href="#" class="cart-btn minus" (click)="shoppingService.removeFromCart(shoppingItem.originalItem.id)">-</a>
+          <div class="handler">
+            <a [routerLink]="['/page', apiService.currentPage + 1]" class="cart-btn plus" (click)="shoppingService.addToCart(shoppingItem.originalItem)">+</a
+            ><a [routerLink]="['/page', apiService.currentPage + 1]" class="cart-btn minus" (click)="shoppingService.removeFromCart(shoppingItem.originalItem.id)">-</a>
           </div>
         </div>
       </li>

@@ -35,13 +35,6 @@ export class ApiService {
     // RxJS
     this.dataProvider
     .pipe(
-      tap(items => {
-        this.pages = [];
-        const pageNo = Math.floor(items.length / this.maxPageItems) + (items.length % this.maxPageItems !== 0 ? 1 : 0);
-        for (let i = 0 ; i < pageNo; i++) {
-          this.pages.push(i);
-        }
-      }),
       mergeMap(items => from(items)),
       filter(item =>
         this.searchStr.length === 0
@@ -53,6 +46,11 @@ export class ApiService {
       toArray()
     )
     .subscribe((data: Commodity[]) => {
+      this.pages = [];
+      const pageNo = Math.floor(data.length / this.maxPageItems) + (data.length % this.maxPageItems !== 0 ? 1 : 0);
+      for (let i = 0 ; i < pageNo; i++) {
+        this.pages.push(i);
+      }
       this.data = data;
     });
     // this.http.post(url, body).subscribe();

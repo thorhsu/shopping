@@ -18,6 +18,7 @@ export class AppComponent {
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
+    console.log("url:", this.location.path());
     if (!this.location.path()) {
        this.router.navigate(['/page/1']);
     }
