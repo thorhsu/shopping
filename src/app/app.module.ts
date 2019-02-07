@@ -8,7 +8,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { CartShowPipe } from './cart-show.pipe';
 import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: AppComponent },
+  { path: '', pathMatch: 'full', component: PaginationComponent },
   { path: 'page/:pageNo', component: PaginationComponent}
 ];
 

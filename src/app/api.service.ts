@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { filter, shareReplay, mergeMap, toArray, tap, skip, take  } from 'rxjs/operators';
 import { from  } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface Commodity {
   id: string;
@@ -21,25 +22,24 @@ export class ApiService {
   pages: number[] = [];
   currentPage = 0;
   maxPageItems = 10;
-  searchStr = '';
+  searchStr;
   title = 'Angular初學者一定要來的商城';
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private router: Router) { }
 
   dataProvider =
         this.http.get<any[]>('./assets/pros-list.json').pipe(shareReplay());
 
   query() {
-    console.log("searchStr:", this.searchStr);
     // Observable
     // RxJS
     this.dataProvider
     .pipe(
       mergeMap(items => from(items)),
       filter(item =>
-        this.searchStr.length === 0
-          ? true
+        (!this.searchStr) ? true
           : item.name.toLowerCase().indexOf(this.searchStr.toLowerCase()) >= 0
       ),
       toArray()
@@ -53,6 +53,15 @@ export class ApiService {
       if (this.currentPage * this.maxPageItems > data.length) {
         this.currentPage = 0;
       }
+      console.log('test');
+      this.router.navigate(
+        ['/page', this.currentPage + 1],
+        {
+          queryParams: {
+            'searchStr': this.searchStr,
+          }
+        }
+      );
       this.data = data.slice(this.currentPage * this.maxPageItems, (this.currentPage + 1) * this.maxPageItems);
     });
     // this.http.post(url, body).subscribe();

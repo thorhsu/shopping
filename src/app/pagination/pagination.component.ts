@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
@@ -20,6 +21,6 @@ export class PaginationComponent implements OnInit {
       this.apiService.currentPage = !parseInt(params.get('pageNo')) ? 0 : parseInt(params.get('pageNo')) - 1;
       this.apiService.query();
     });
-  }
 
+  }
 }

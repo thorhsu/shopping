@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from './api.service';
 import { ShoppingService } from './shopping.service';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -14,13 +14,16 @@ export class AppComponent {
   constructor(public apiService: ApiService,
     public shoppingService: ShoppingService,
     private router: Router,
-    private location: Location) {}
+    private location: Location,
+    private route: ActivatedRoute) {}
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
-    console.log("url:", this.location.path());
     if (!this.location.path()) {
        this.router.navigate(['/page/1']);
     }
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.apiService.searchStr = (queryParams.get('searchStr')) ? (queryParams.get('searchStr')) : '';
+    });
   }
 }
