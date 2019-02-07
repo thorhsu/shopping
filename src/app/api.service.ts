@@ -53,7 +53,6 @@ export class ApiService {
       if (this.currentPage * this.maxPageItems > data.length) {
         this.currentPage = 0;
       }
-      console.log('test');
       this.router.navigate(
         ['/page', this.currentPage + 1],
         {
